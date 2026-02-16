@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id          Int      @id @default(autoincrement())
+  username    String   @unique
+  lastSyncAt  DateTime?
+  profileJson Json?
+  statsJson   Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  games       Game[]
+}
+
+model Game {
+  id                Int      @id @default(autoincrement())
+  playerId          Int
+  player            Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  url               String   @unique
+  pgn               String?
+  endTime           DateTime
+  timeClass         String
+  timeControl       String?
+  rules             String?
+  rated             Boolean  @default(true)
+  tcn               String?
+  fen               String?
+  eco               String?
+  ecoUrl            String?
+  whiteUsername     String
+  blackUsername     String
+  whiteRating       Int?
+  blackRating       Int?
+  whiteResult       String?
+  blackResult       String?
+  whiteAccuracy     Float?
+  blackAccuracy     Float?
+  resultPerspective String
+  colorPerspective  String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([playerId, endTime])
+  @@index([playerId, timeClass])
+  @@index([playerId, resultPerspective])
+  @@index([playerId, eco])
+}
