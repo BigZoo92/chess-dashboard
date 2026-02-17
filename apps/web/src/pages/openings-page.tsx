@@ -106,7 +106,7 @@ export function OpeningsPage() {
           {openingsQuery.isLoading ? (
             <p className="text-sm text-muted-foreground">Loading openings...</p>
           ) : openingsQuery.isError ? (
-            <p className="text-sm text-red-600">{openingsQuery.error.message}</p>
+            <p className="text-sm text-rose-300">{openingsQuery.error.message}</p>
           ) : (
             <Table>
               <TableHeader>
@@ -139,7 +139,7 @@ export function OpeningsPage() {
       {selectedOpening && (
         <div className="fixed inset-0 z-50 flex">
           <div className="flex-1 bg-black/40" onClick={() => setSelectedOpening(null)} />
-          <aside className="h-full w-full max-w-lg overflow-y-auto border-l bg-white p-6 shadow-xl">
+          <aside className="h-full w-full max-w-lg overflow-y-auto border-l border-stone-200/10 bg-[#111914] p-6 shadow-xl shadow-black/40">
             <div className="mb-4 flex items-start justify-between">
               <div>
                 <h2 className="text-xl font-semibold">{selectedOpening.eco}</h2>
@@ -147,7 +147,7 @@ export function OpeningsPage() {
                   {selectedOpening.color} • {selectedOpening.games} games
                 </p>
               </div>
-              <button onClick={() => setSelectedOpening(null)} className="rounded p-1 hover:bg-slate-100">
+              <button onClick={() => setSelectedOpening(null)} className="rounded p-1 hover:bg-stone-100/10">
                 <X size={18} />
               </button>
             </div>
@@ -170,10 +170,10 @@ export function OpeningsPage() {
                 {openingGamesQuery.isLoading ? (
                   <p className="text-muted-foreground">Loading games...</p>
                 ) : openingGamesQuery.isError ? (
-                  <p className="text-red-600">{openingGamesQuery.error.message}</p>
+                  <p className="text-rose-300">{openingGamesQuery.error.message}</p>
                 ) : (
                   openingGamesQuery.data?.items.map((game) => (
-                    <div key={game.id} className="rounded border p-2">
+                    <div key={game.id} className="rounded border border-stone-200/10 bg-stone-100/5 p-2">
                       <p className="font-medium">
                         vs {game.opponentUsername} • {game.timeClass}
                       </p>
@@ -194,7 +194,7 @@ export function OpeningsPage() {
 
 function MetricCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border bg-slate-50 p-3">
+    <div className="rounded-md border border-stone-200/10 bg-[#141c17] p-3">
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="text-lg font-semibold">{value}</p>
     </div>

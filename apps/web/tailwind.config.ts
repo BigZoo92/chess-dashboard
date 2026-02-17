@@ -6,26 +6,26 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        border: 'hsl(214.3 31.8% 91.4%)',
-        input: 'hsl(214.3 31.8% 91.4%)',
-        ring: 'hsl(221.2 83.2% 53.3%)',
-        background: 'hsl(0 0% 100%)',
-        foreground: 'hsl(222.2 47.4% 11.2%)',
+        border: 'hsl(36 12% 24%)',
+        input: 'hsl(36 12% 24%)',
+        ring: 'hsl(158 64% 52%)',
+        background: 'hsl(143 18% 8%)',
+        foreground: 'hsl(40 21% 91%)',
         primary: {
-          DEFAULT: 'hsl(221.2 83.2% 53.3%)',
-          foreground: 'hsl(210 40% 98%)'
+          DEFAULT: 'hsl(158 64% 52%)',
+          foreground: 'hsl(143 22% 10%)'
         },
         secondary: {
-          DEFAULT: 'hsl(210 40% 96.1%)',
-          foreground: 'hsl(222.2 47.4% 11.2%)'
+          DEFAULT: 'hsl(143 14% 14%)',
+          foreground: 'hsl(40 16% 88%)'
         },
         muted: {
-          DEFAULT: 'hsl(210 40% 96.1%)',
-          foreground: 'hsl(215.4 16.3% 46.9%)'
+          DEFAULT: 'hsl(143 12% 16%)',
+          foreground: 'hsl(36 11% 65%)'
         },
         card: {
-          DEFAULT: 'hsl(0 0% 100%)',
-          foreground: 'hsl(222.2 47.4% 11.2%)'
+          DEFAULT: 'hsl(143 15% 11%)',
+          foreground: 'hsl(40 21% 91%)'
         }
       },
       borderRadius: {

@@ -125,7 +125,7 @@ export function GamesPage() {
           {gamesQuery.isLoading ? (
             <p className="text-sm text-muted-foreground">Loading games...</p>
           ) : gamesQuery.isError ? (
-            <p className="text-sm text-red-600">{gamesQuery.error.message}</p>
+            <p className="text-sm text-rose-300">{gamesQuery.error.message}</p>
           ) : (
             <>
               <Table>
@@ -178,14 +178,14 @@ export function GamesPage() {
 
       {selectedGameId !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-lg border bg-white p-6 shadow-xl">
+          <div className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-lg border border-stone-200/10 bg-[#111914] p-6 shadow-xl shadow-black/40">
             <div className="mb-4 flex justify-between">
               <h2 className="text-xl font-semibold">Game detail</h2>
               <button
                 onClick={() => {
                   setSelectedGameId(null);
                 }}
-                className="rounded p-1 hover:bg-slate-100"
+                className="rounded p-1 hover:bg-stone-100/10"
               >
                 <X size={18} />
               </button>
@@ -193,7 +193,7 @@ export function GamesPage() {
             {detailQuery.isLoading ? (
               <p className="text-sm text-muted-foreground">Loading detail...</p>
             ) : detailQuery.isError ? (
-              <p className="text-sm text-red-600">{detailQuery.error.message}</p>
+              <p className="text-sm text-rose-300">{detailQuery.error.message}</p>
             ) : detailQuery.data ? (
               <div className="space-y-4 text-sm">
                 <div className="grid gap-3 md:grid-cols-2">
@@ -204,7 +204,7 @@ export function GamesPage() {
                   <Metric label="White" value={`${detailQuery.data.game.whiteUsername} (${detailQuery.data.game.whiteResult || '-'})`} />
                   <Metric label="Black" value={`${detailQuery.data.game.blackUsername} (${detailQuery.data.game.blackResult || '-'})`} />
                 </div>
-                <a href={detailQuery.data.game.url} target="_blank" rel="noreferrer" className="text-blue-600 underline">
+                <a href={detailQuery.data.game.url} target="_blank" rel="noreferrer" className="text-emerald-300 underline">
                   Open on Chess.com
                 </a>
                 <details>
@@ -247,7 +247,7 @@ function FilterSelect({
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border bg-slate-50 p-3">
+    <div className="rounded-md border border-stone-200/10 bg-[#141c17] p-3">
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="font-medium">{value}</p>
     </div>

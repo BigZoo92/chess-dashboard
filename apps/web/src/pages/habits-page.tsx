@@ -13,18 +13,18 @@ const timeClassOptions = ['', 'bullet', 'blitz', 'rapid', 'daily'];
 
 const cellClassName = (games: number, winrate: number) => {
   if (games === 0) {
-    return 'bg-slate-100 text-slate-400';
+    return 'bg-stone-900 text-stone-500';
   }
   if (winrate >= 0.65) {
-    return 'bg-emerald-500 text-white';
+    return 'bg-emerald-500 text-emerald-50';
   }
   if (winrate >= 0.5) {
-    return 'bg-emerald-300 text-slate-900';
+    return 'bg-emerald-300 text-emerald-950';
   }
   if (winrate >= 0.35) {
-    return 'bg-amber-300 text-slate-900';
+    return 'bg-amber-300 text-amber-950';
   }
-  return 'bg-rose-400 text-white';
+  return 'bg-rose-500 text-rose-50';
 };
 
 export function HabitsPage() {
@@ -83,7 +83,7 @@ export function HabitsPage() {
           {heatmapQuery.isLoading ? (
             <p className="text-sm text-muted-foreground">Loading heatmap...</p>
           ) : heatmapQuery.isError ? (
-            <p className="text-sm text-red-600">{heatmapQuery.error.message}</p>
+            <p className="text-sm text-rose-300">{heatmapQuery.error.message}</p>
           ) : (
             <div className="min-w-[880px] space-y-2">
               <div className="grid grid-cols-[80px_repeat(24,minmax(28px,1fr))] gap-1 text-[10px] text-muted-foreground">
@@ -125,7 +125,7 @@ export function HabitsPage() {
           {streaksQuery.isLoading ? (
             <p className="text-sm text-muted-foreground">Loading streaks...</p>
           ) : streaksQuery.isError ? (
-            <p className="text-sm text-red-600">{streaksQuery.error.message}</p>
+            <p className="text-sm text-rose-300">{streaksQuery.error.message}</p>
           ) : streaksQuery.data ? (
             <div className="grid gap-4 md:grid-cols-3">
               <MetricCard label="Longest win streak" value={String(streaksQuery.data.longestWinStreak)} />
@@ -154,7 +154,7 @@ export function HabitsPage() {
 
 function MetricCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border bg-slate-50 p-4">
+    <div className="rounded-md border border-stone-200/10 bg-[#141c17] p-4">
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="mt-1 text-lg font-semibold">{value}</p>
     </div>

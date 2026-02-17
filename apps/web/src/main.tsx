@@ -20,10 +20,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <SettingsProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-        <Toaster position="top-right" />
+        <div className="dark">
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+          <Toaster position="top-right" />
+        </div>
       </SettingsProvider>
     </QueryClientProvider>
   </React.StrictMode>

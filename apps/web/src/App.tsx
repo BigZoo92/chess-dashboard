@@ -6,12 +6,15 @@ import { GamesPage } from '@/pages/games-page';
 import { HabitsPage } from '@/pages/habits-page';
 import { OpeningsPage } from '@/pages/openings-page';
 import { SettingsPage } from '@/pages/settings-page';
+import { LandingPage } from './pages/landing-page';
 
 export default function App() {
   return (
     <Routes>
+      <Route index element={<LandingPage />} />
+      ouv
       <Route element={<AppShell />}>
-        <Route index element={<DashboardPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/openings" element={<OpeningsPage />} />
         <Route path="/habits" element={<HabitsPage />} />
         <Route path="/games" element={<GamesPage />} />

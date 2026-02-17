@@ -10,8 +10,17 @@ import { TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useSettings } from '@/context/settings-context';
 import { api } from '@/lib/api';
 import { formatPercent, formatShortDate } from '@/lib/format';
+import { cn } from '@/lib/utils';
 
 const timeClassOptions = ['', 'bullet', 'blitz', 'rapid', 'daily'];
+const chartGridColor = 'rgba(231, 229, 228, 0.18)';
+const chartAxisColor = 'rgba(231, 229, 228, 0.25)';
+const chartTickColor = '#d6d3d1';
+const chartTooltipStyle = {
+  backgroundColor: '#111914',
+  border: '1px solid rgba(231, 229, 228, 0.2)',
+  color: '#f5f5f4'
+};
 
 export function DashboardPage() {
   const { username } = useSettings();
@@ -48,20 +57,34 @@ export function DashboardPage() {
   const ratingPoints = ratingQuery.data?.points || [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 rounded-2xl border border-stone-200/10 bg-[#111914]/70 p-4 text-stone-100 md:p-6">
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Overview</h1>
-          <p className="text-sm text-muted-foreground">KPI globaux, progression Elo et performances par cadence.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-stone-100">Overview</h1>
+          <p className="text-sm text-stone-300">KPI globaux, progression Elo et performances par cadence.</p>
         </div>
-        <Button onClick={() => syncMutation.mutate()} disabled={syncMutation.isPending}>
+        <Button
+          onClick={() => syncMutation.mutate()}
+          disabled={syncMutation.isPending}
+          className="bg-emerald-400 text-[#102117] hover:bg-emerald-300"
+        >
           {syncMutation.isPending ? 'Syncing...' : 'Sync now'}
         </Button>
       </div>
 
-      <TabsList>
+      <TabsList className="border border-stone-200/10 bg-[#0d130f]">
         {timeClassOptions.map((option) => (
-          <TabsTrigger key={option || 'all'} active={timeClass === option} onClick={() => setTimeClass(option)}>
+          <TabsTrigger
+            key={option || 'all'}
+            active={timeClass === option}
+            onClick={() => setTimeClass(option)}
+            className={cn(
+              'capitalize',
+              timeClass === option
+                ? '!bg-emerald-400/20 !text-emerald-100'
+                : '!text-stone-300 hover:!text-stone-100'
+            )}
+          >
             {option || 'all'}
           </TabsTrigger>
         ))}
@@ -70,12 +93,12 @@ export function DashboardPage() {
       {summaryQuery.isLoading ? (
         <div className="grid gap-4 md:grid-cols-5">
           {Array.from({ length: 5 }).map((_, index) => (
-            <Skeleton key={index} className="h-28" />
+            <Skeleton key={index} className="h-28 bg-stone-100/10" />
           ))}
         </div>
       ) : summaryQuery.isError ? (
-        <Card>
-          <CardContent className="p-6 text-sm text-red-600">{summaryQuery.error.message}</CardContent>
+        <Card className="border-stone-200/10 bg-[#141c17] text-stone-100">
+          <CardContent className="p-6 text-sm text-rose-300">{summaryQuery.error.message}</CardContent>
         </Card>
       ) : summary ? (
         <>
@@ -91,40 +114,63 @@ export function DashboardPage() {
           </div>
 
           <div className="grid gap-4 lg:grid-cols-2">
-            <Card>
+            <Card className="border-stone-200/10 bg-[#141c17] text-stone-100">
               <CardHeader>
-                <CardTitle>Rating series</CardTitle>
-                <CardDescription>Evolution du rating partie par partie.</CardDescription>
+                <CardTitle className="text-stone-100">Rating series</CardTitle>
+                <CardDescription className="text-stone-300">Evolution du rating partie par partie.</CardDescription>
               </CardHeader>
               <CardContent className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={ratingPoints}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="endTime" tickFormatter={(value) => formatShortDate(value)} minTickGap={24} />
-                    <YAxis domain={['auto', 'auto']} />
+                    <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor} />
+                    <XAxis
+                      dataKey="endTime"
+                      tickFormatter={(value) => formatShortDate(value)}
+                      minTickGap={24}
+                      axisLine={{ stroke: chartAxisColor }}
+                      tickLine={{ stroke: chartAxisColor }}
+                      tick={{ fill: chartTickColor, fontSize: 12 }}
+                    />
+                    <YAxis
+                      domain={['auto', 'auto']}
+                      axisLine={{ stroke: chartAxisColor }}
+                      tickLine={{ stroke: chartAxisColor }}
+                      tick={{ fill: chartTickColor, fontSize: 12 }}
+                    />
                     <Tooltip
                       formatter={(value: number) => [`${value}`, 'rating']}
                       labelFormatter={(value: number) => formatShortDate(value)}
+                      contentStyle={chartTooltipStyle}
+                      labelStyle={{ color: '#f5f5f4' }}
                     />
-                    <Line type="monotone" dataKey="rating" stroke="#1d4ed8" dot={false} strokeWidth={2} />
+                    <Line type="monotone" dataKey="rating" stroke="#34d399" dot={false} strokeWidth={2} />
                   </LineChart>
                 </ResponsiveContainer>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="border-stone-200/10 bg-[#141c17] text-stone-100">
               <CardHeader>
-                <CardTitle>Split by time class</CardTitle>
-                <CardDescription>Volume de parties par cadence.</CardDescription>
+                <CardTitle className="text-stone-100">Split by time class</CardTitle>
+                <CardDescription className="text-stone-300">Volume de parties par cadence.</CardDescription>
               </CardHeader>
               <CardContent className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={summary.byTimeClass}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="timeClass" />
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="games" fill="#0f766e" radius={[4, 4, 0, 0]} />
+                    <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor} />
+                    <XAxis
+                      dataKey="timeClass"
+                      axisLine={{ stroke: chartAxisColor }}
+                      tickLine={{ stroke: chartAxisColor }}
+                      tick={{ fill: chartTickColor, fontSize: 12 }}
+                    />
+                    <YAxis
+                      axisLine={{ stroke: chartAxisColor }}
+                      tickLine={{ stroke: chartAxisColor }}
+                      tick={{ fill: chartTickColor, fontSize: 12 }}
+                    />
+                    <Tooltip contentStyle={chartTooltipStyle} labelStyle={{ color: '#f5f5f4' }} />
+                    <Bar dataKey="games" fill="#10b981" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -138,12 +184,12 @@ export function DashboardPage() {
 
 function KpiCard({ title, value }: { title: string; value: string }) {
   return (
-    <Card>
+    <Card className="border-stone-200/10 bg-[#141c17] text-stone-100">
       <CardHeader className="pb-2">
-        <CardDescription>{title}</CardDescription>
+        <CardDescription className="text-stone-300">{title}</CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-2xl font-semibold">{value}</p>
+        <p className="text-2xl font-semibold text-stone-100">{value}</p>
       </CardContent>
     </Card>
   );

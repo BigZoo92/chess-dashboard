@@ -84,7 +84,7 @@ export function SettingsPage() {
           {statusQuery.isLoading ? (
             <p className="text-muted-foreground">Loading status...</p>
           ) : statusQuery.isError ? (
-            <p className="text-red-600">{statusQuery.error.message}</p>
+            <p className="text-rose-300">{statusQuery.error.message}</p>
           ) : (
             <div className="space-y-2">
               <p>

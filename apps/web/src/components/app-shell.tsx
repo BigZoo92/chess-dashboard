@@ -8,6 +8,7 @@ import { api } from '@/lib/api';
 import { formatDateTime } from '@/lib/format';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const links = [
   {
@@ -61,9 +62,9 @@ export function AppShell() {
   });
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
-      <aside className="hidden w-64 border-r bg-white p-4 md:block">
-        <Link to="/" className="mb-8 block text-lg font-semibold">
+    <div className="flex min-h-screen bg-[#0e1511] text-stone-100">
+      <aside className="hidden w-64 border-r border-stone-200/10 bg-[#101813] p-4 md:block">
+        <Link to="/" className="mb-8 block text-lg font-semibold text-stone-100">
           Chess.com Stats
         </Link>
         <nav className="space-y-2">
@@ -72,7 +73,12 @@ export function AppShell() {
               key={link.to}
               to={link.to}
               className={({ isActive }) =>
-                `flex items-center gap-2 rounded-md px-3 py-2 text-sm ${isActive ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100'}`
+                cn(
+                  'flex items-center gap-2 rounded-md px-3 py-2 text-sm',
+                  isActive
+                    ? 'bg-emerald-400/15 text-emerald-100'
+                    : 'text-stone-300 hover:bg-stone-100/10 hover:text-stone-100'
+                )
               }
             >
               <link.icon size={16} />
@@ -82,15 +88,17 @@ export function AppShell() {
         </nav>
       </aside>
       <div className="flex flex-1 flex-col">
-        <header className="sticky top-0 z-20 border-b bg-white/90 px-4 py-3 backdrop-blur">
+        <header className="sticky top-0 z-20 border-b border-stone-200/10 bg-[#101813]/90 px-4 py-3 backdrop-blur">
           <div className="mx-auto flex w-full max-w-7xl flex-col gap-3">
             <div className="flex items-center justify-between gap-4">
-              <Link to="/" className="text-base font-semibold md:hidden">
+              <Link to="/" className="text-base font-semibold text-stone-100 md:hidden">
                 Chess.com Stats
               </Link>
               <div className="hidden items-center gap-2 md:flex">
-                <Badge variant="secondary">{statusQuery.data?.username || username || 'No username'}</Badge>
-                <span className="text-xs text-muted-foreground">
+                <Badge variant="outline" className="border-stone-200/20 bg-stone-100/5 text-stone-200">
+                  {statusQuery.data?.username || username || 'No username'}
+                </Badge>
+                <span className="text-xs text-stone-400">
                   Last sync:{' '}
                   {formatDateTime(statusQuery.data?.lastSyncAt ? Date.parse(statusQuery.data.lastSyncAt) / 1000 : null)}
                 </span>
@@ -98,15 +106,17 @@ export function AppShell() {
               <Button
                 onClick={() => syncMutation.mutate()}
                 disabled={syncMutation.isPending || statusQuery.data?.isSyncing}
-                className="gap-2"
+                className="gap-2 bg-emerald-400 text-[#102117] hover:bg-emerald-300"
               >
                 <RefreshCw size={16} className={syncMutation.isPending ? 'animate-spin' : ''} />
                 {syncMutation.isPending || statusQuery.data?.isSyncing ? 'Syncing...' : 'Sync now'}
               </Button>
             </div>
             <div className="flex items-center gap-2 md:hidden">
-              <Badge variant="secondary">{statusQuery.data?.username || username || 'No username'}</Badge>
-              <span className="text-xs text-muted-foreground">
+              <Badge variant="outline" className="border-stone-200/20 bg-stone-100/5 text-stone-200">
+                {statusQuery.data?.username || username || 'No username'}
+              </Badge>
+              <span className="text-xs text-stone-400">
                 Last sync:{' '}
                 {formatDateTime(statusQuery.data?.lastSyncAt ? Date.parse(statusQuery.data.lastSyncAt) / 1000 : null)}
               </span>
@@ -117,7 +127,10 @@ export function AppShell() {
                   key={link.to}
                   to={link.to}
                   className={({ isActive }) =>
-                    `whitespace-nowrap rounded-md px-3 py-1.5 text-xs ${isActive ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`
+                    cn(
+                      'whitespace-nowrap rounded-md px-3 py-1.5 text-xs',
+                      isActive ? 'bg-emerald-400/15 text-emerald-100' : 'bg-stone-100/10 text-stone-300'
+                    )
                   }
                 >
                   {link.label}
@@ -126,7 +139,7 @@ export function AppShell() {
             </nav>
           </div>
         </header>
-        <main className="mx-auto w-full max-w-7xl flex-1 p-4 md:p-6">
+        <main className="mx-auto w-full max-w-7xl flex-1 p-4 text-stone-100 md:p-6">
           <Outlet />
         </main>
       </div>
