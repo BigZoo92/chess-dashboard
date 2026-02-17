@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { X } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -187,7 +186,10 @@ export function GamesPage() {
                 }}
                 className="rounded p-1 hover:bg-stone-100/10"
               >
-                <X size={18} />
+                <span className="text-lg leading-none" aria-hidden>
+                  x
+                </span>
+                <span className="sr-only">Close</span>
               </button>
             </div>
             {detailQuery.isLoading ? (

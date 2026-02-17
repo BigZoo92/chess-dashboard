@@ -16,12 +16,14 @@ const queryClient = new QueryClient({
   }
 });
 
+const routerBasename = (import.meta.env.VITE_ROUTER_BASENAME || '/dashboard').replace(/\/+$/, '');
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <SettingsProvider>
         <div className="dark">
-          <BrowserRouter>
+          <BrowserRouter basename={routerBasename}>
             <App />
           </BrowserRouter>
           <Toaster position="top-right" />

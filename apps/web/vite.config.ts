@@ -4,16 +4,32 @@ import path from 'node:path';
 
 const webPort = Number(process.env.WEB_PORT || 5173);
 const apiUrl = process.env.VITE_API_URL;
+const appBase = (process.env.VITE_BASE_PATH || '/').replace(/\/?$/, '/');
 
 export default defineConfig({
+  base: appBase,
   plugins: [react()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
   },
+  build: {
+    minify: 'esbuild',
+    cssMinify: true,
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          charts: ['recharts'],
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          query: ['@tanstack/react-query']
+        }
+      }
+    }
+  },
   server: {
-    allowedHosts: ['chess-dashboard.enzogivernaud.fr'],
+    allowedHosts: ['chess-dashboard.enzogivernaud.fr', 'localhost'],
     host: '0.0.0.0',
     port: webPort,
     proxy: apiUrl

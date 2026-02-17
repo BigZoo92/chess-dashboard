@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type { OpeningStatDto } from '@ecoconception/shared';
-import { X } from 'lucide-react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -148,7 +147,10 @@ export function OpeningsPage() {
                 </p>
               </div>
               <button onClick={() => setSelectedOpening(null)} className="rounded p-1 hover:bg-stone-100/10">
-                <X size={18} />
+                <span className="text-lg leading-none" aria-hidden>
+                  x
+                </span>
+                <span className="sr-only">Close</span>
               </button>
             </div>
 

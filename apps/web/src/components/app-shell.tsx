@@ -1,6 +1,5 @@
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { BarChart3, Flame, Home, RefreshCw, Settings2, Swords } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { useSettings } from '@/context/settings-context';
@@ -13,28 +12,23 @@ import { cn } from '@/lib/utils';
 const links = [
   {
     to: '/',
-    label: 'Dashboard',
-    icon: Home
+    label: 'Dashboard'
   },
   {
     to: '/openings',
-    label: 'Openings',
-    icon: BarChart3
+    label: 'Openings'
   },
   {
     to: '/habits',
-    label: 'Habits',
-    icon: Flame
+    label: 'Habits'
   },
   {
     to: '/games',
-    label: 'Games',
-    icon: Swords
+    label: 'Games'
   },
   {
     to: '/settings',
-    label: 'Settings',
-    icon: Settings2
+    label: 'Settings'
   }
 ];
 
@@ -81,7 +75,7 @@ export function AppShell() {
                 )
               }
             >
-              <link.icon size={16} />
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-current" aria-hidden />
               {link.label}
             </NavLink>
           ))}
@@ -108,7 +102,13 @@ export function AppShell() {
                 disabled={syncMutation.isPending || statusQuery.data?.isSyncing}
                 className="gap-2 bg-emerald-400 text-[#102117] hover:bg-emerald-300"
               >
-                <RefreshCw size={16} className={syncMutation.isPending ? 'animate-spin' : ''} />
+                <span
+                  className={cn(
+                    'inline-block h-3 w-3 rounded-full border border-[#102117]',
+                    syncMutation.isPending ? 'animate-spin border-t-transparent' : 'opacity-70'
+                  )}
+                  aria-hidden
+                />
                 {syncMutation.isPending || statusQuery.data?.isSyncing ? 'Syncing...' : 'Sync now'}
               </Button>
             </div>
