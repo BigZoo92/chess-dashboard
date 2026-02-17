@@ -35,6 +35,7 @@ services:
         condition: service_healthy
     expose:
       - "3001"
+    # Optionnel : garde-le seulement si tu veux appeler l'API depuis l'extérieur (debug, etc.)
     ports:
       - "3001:3001"
 
@@ -49,22 +50,12 @@ services:
         PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-https://chess-dashboard.enzogivernaud.fr}
     depends_on:
       - api
-    ports:
-      - "8080:80"
-
-  proxy:
-    build:
-      context: .
-      dockerfile: apps/proxy/Dockerfile
-      args:
-        VITE_API_URL: ""
-        VITE_BASE_PATH: /dashboard/
-        VITE_ROUTER_BASENAME: /dashboard
-        PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-https://chess-dashboard.enzogivernaud.fr}
-    depends_on:
-      - api
+    # IMPORTANT : c'est un Caddy, il écoute sur 80 dans le container
     expose:
       - "80"
+    # Optionnel : garde-le si tu veux tester sans Traefik (curl localhost:8080)
+    ports:
+      - "8080:80"
 
 volumes:
   db-data:
