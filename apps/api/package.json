@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "docker:dev": "sh ./scripts/dev.sh",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/server.js",
     "lint": "eslint src scripts prisma --ext .ts",
     "typecheck": "tsc --noEmit",
     "prisma:generate": "prisma generate",

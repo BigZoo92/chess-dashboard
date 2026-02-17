@@ -18,6 +18,8 @@ EXPOSE 4321
 CMD ["pnpm", "--filter", "@ecoconception/landing", "docker:dev"]
 
 FROM base AS build
+ARG PUBLIC_SITE_URL=https://chess-dashboard.enzogivernaud.fr
+ENV PUBLIC_SITE_URL=${PUBLIC_SITE_URL}
 RUN pnpm --filter @ecoconception/landing build
 
 FROM caddy:2.8-alpine AS prod

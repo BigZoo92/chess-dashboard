@@ -4,17 +4,25 @@ import BaseLayout from '../layouts/base-layout.astro';
 const title = 'Chess Dashboard - Track Progress and Improve Faster';
 const description =
   'A lightweight chess analytics dashboard focused on lower data costs, faster loading, and clear performance insights.';
-const canonical = 'https://chess-dashboard.enzogivernaud.fr/';
-const socialImage = 'https://chess-dashboard.enzogivernaud.fr/images/hero-placeholder.jpg';
+const site = Astro.site ?? new URL('https://chess-dashboard.enzogivernaud.fr/');
+const canonical = new URL('/', site).toString();
+const socialImage = new URL('/images/hero-placeholder.jpg', site).toString();
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} image={socialImage}>
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  image={socialImage}
+  imageAlt="Chess pieces on a board representing data-driven performance analysis."
+>
   <Fragment slot="head">
     <link
       rel="preload"
       as="image"
-      href="/images/hero-placeholder.jpg"
-      imagesrcset="/images/hero-placeholder.jpg 1600w"
+      href="/images/hero.avif"
+      type="image/avif"
+      imagesrcset="/images/hero.avif 1920w"
       imagesizes="100vw"
       fetchpriority="high"
     />
@@ -31,16 +39,34 @@ const socialImage = 'https://chess-dashboard.enzogivernaud.fr/images/hero-placeh
   </header>
 
   <main>
-    <section class="mx-auto grid w-full max-w-6xl gap-12 px-6 pb-16 pt-6 lg:grid-cols-2 lg:items-end">
-      <div class="space-y-6">
-        <p class="inline-flex rounded-full border border-emerald-300/40 bg-emerald-300/10 px-4 py-1 text-sm text-emerald-100">
+    <section class="relative isolate overflow-hidden border-y border-slate-700/40">
+      <picture class="absolute inset-0 -z-20">
+        <source type="image/avif" srcset="/images/hero.avif 1920w" sizes="100vw" />
+        <source type="image/webp" srcset="/images/hero.webp 1920w" sizes="100vw" />
+        <img
+          src="/images/hero-placeholder.jpg"
+          srcset="/images/hero-placeholder.jpg 1920w"
+          sizes="100vw"
+          alt="Chess pieces on a board to illustrate strategic performance analysis."
+          width="1920"
+          height="1080"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="h-full w-full object-cover"
+        />
+      </picture>
+      <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,rgba(16,185,129,0.3),transparent_40%),linear-gradient(160deg,rgba(2,6,23,0.6),rgba(2,6,23,0.92))]"></div>
+
+      <div class="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-20 md:py-28">
+        <p class="inline-flex w-fit rounded-full border border-emerald-300/40 bg-emerald-300/10 px-4 py-1 text-sm text-emerald-100">
           Built for eco-optimized analytics
         </p>
-        <h1 class="text-balance text-4xl font-bold leading-tight text-white md:text-6xl">
+        <h1 class="max-w-4xl text-balance text-4xl font-bold leading-tight text-white md:text-6xl">
           Chess progress tracking with less JS, less network, and faster insights.
         </h1>
-        <p class="max-w-xl text-lg text-slate-300">
-          This landing page is static-first and lightweight. The full dashboard remains available at
+        <p class="max-w-2xl text-lg text-slate-200">
+          Static-first landing, lightweight payload, and production dashboard isolated at
           <code>/dashboard</code>.
         </p>
         <div class="flex flex-wrap gap-3">
@@ -55,25 +81,9 @@ const socialImage = 'https://chess-dashboard.enzogivernaud.fr/images/hero-placeh
           </a>
         </div>
       </div>
-
-      <figure class="section-card overflow-hidden p-0">
-        <img
-          src="/images/hero-placeholder.jpg"
-          alt="Chess pieces on a board representing strategic game analysis."
-          width="1920"
-          height="1080"
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-          class="h-auto w-full object-cover"
-        />
-        <figcaption class="border-t border-slate-700/70 px-5 py-3 text-sm text-slate-300">
-          Placeholder hero image. Replace with final compressed image at <code>apps/landing/public/images/hero-placeholder.jpg</code>.
-        </figcaption>
-      </figure>
     </section>
 
-    <section class="mx-auto w-full max-w-6xl px-6 pb-12" aria-labelledby="value-props-heading">
+    <section class="mx-auto w-full max-w-6xl px-6 pb-12 pt-12" aria-labelledby="value-props-heading">
       <h2 id="value-props-heading" class="mb-5 text-2xl font-semibold text-white">Value props</h2>
       <div class="grid gap-4 md:grid-cols-3">
         <article class="section-card">

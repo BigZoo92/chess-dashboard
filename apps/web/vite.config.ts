@@ -4,7 +4,15 @@ import path from 'node:path';
 
 const webPort = Number(process.env.WEB_PORT || 5173);
 const apiUrl = process.env.VITE_API_URL;
-const appBase = (process.env.VITE_BASE_PATH || '/').replace(/\/?$/, '/');
+
+const normalizeBasePath = (value: string | undefined) => {
+  const candidate = (value || '/dashboard').trim();
+  const withLeadingSlash = candidate.startsWith('/') ? candidate : `/${candidate}`;
+  const withoutTrailingSlash = withLeadingSlash.replace(/\/+$/, '');
+  return `${withoutTrailingSlash || '/'}/`;
+};
+
+const appBase = normalizeBasePath(process.env.VITE_BASE_PATH);
 
 export default defineConfig({
   base: appBase,

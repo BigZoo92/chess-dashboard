@@ -15,8 +15,14 @@ RUN pnpm install --no-frozen-lockfile
 
 COPY . .
 
-ARG VITE_API_URL
+ARG VITE_API_URL=""
 ENV VITE_API_URL=${VITE_API_URL}
+ARG VITE_BASE_PATH=/dashboard/
+ENV VITE_BASE_PATH=${VITE_BASE_PATH}
+ARG VITE_ROUTER_BASENAME=/dashboard
+ENV VITE_ROUTER_BASENAME=${VITE_ROUTER_BASENAME}
+ARG PUBLIC_SITE_URL=https://chess-dashboard.enzogivernaud.fr
+ENV PUBLIC_SITE_URL=${PUBLIC_SITE_URL}
 
 RUN pnpm --filter @ecoconception/web build
 RUN pnpm --filter @ecoconception/landing build

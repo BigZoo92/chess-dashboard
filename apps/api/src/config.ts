@@ -5,7 +5,10 @@ const parseIntEnv = (value: string | undefined, fallback: number): number => {
 
 export const config = {
   apiPort: parseIntEnv(process.env.API_PORT, 3001),
-  corsOrigin: process.env.CORS_ORIGIN || 'http://0.0.0.0:5173',
+  corsOrigins: (process.env.CORS_ORIGIN || 'http://localhost:8080,http://localhost:5173')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean),
   chessCom: {
     defaultUsername: process.env.CHESSCOM_USERNAME?.trim() || '',
     userAgent:

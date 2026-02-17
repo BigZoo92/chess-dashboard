@@ -44,6 +44,9 @@ services:
       dockerfile: apps/proxy/Dockerfile
       args:
         VITE_API_URL: ""
+        VITE_BASE_PATH: /dashboard/
+        VITE_ROUTER_BASENAME: /dashboard
+        PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-https://chess-dashboard.enzogivernaud.fr}
     depends_on:
       - api
     ports:

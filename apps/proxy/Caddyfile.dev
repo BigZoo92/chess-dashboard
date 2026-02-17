@@ -10,11 +10,6 @@
     reverse_proxy api:3001
   }
 
-  @dashboardDevAssets path /assets/* /@vite* /@react-refresh /src/* /node_modules/*
-  handle @dashboardDevAssets {
-    reverse_proxy web:5173
-  }
-
   @dashboard path /dashboard*
   handle @dashboard {
     reverse_proxy web:5173

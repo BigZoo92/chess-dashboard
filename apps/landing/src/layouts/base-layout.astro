@@ -6,9 +6,10 @@ interface Props {
   description: string;
   canonical: string;
   image: string;
+  imageAlt?: string;
 }
 
-const { title, description, canonical, image } = Astro.props;
+const { title, description, canonical, image, imageAlt = 'Chess Dashboard hero preview' } = Astro.props;
 ---
 
 <!doctype html>
@@ -18,18 +19,24 @@ const { title, description, canonical, image } = Astro.props;
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#020617" />
     <link rel="canonical" href={canonical} />
 
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Chess Dashboard" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={image} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:locale" content="en_US" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
+    <meta name="twitter:image:alt" content={imageAlt} />
     <slot name="head" />
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased">
