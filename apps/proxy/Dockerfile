@@ -1,4 +1,4 @@
-FROM node:22-alpine AS base
+FROM node:22-alpine AS build
 
 WORKDIR /workspace
 
@@ -9,22 +9,20 @@ RUN corepack enable && corepack prepare pnpm@10.5.2 --activate
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.base.json ./
 COPY apps/web/package.json apps/web/package.json
+COPY apps/landing/package.json apps/landing/package.json
 COPY packages/shared/package.json packages/shared/package.json
 RUN pnpm install --no-frozen-lockfile
 
 COPY . .
 
-FROM base AS dev
-EXPOSE 5173
-CMD ["pnpm", "--filter", "@ecoconception/web", "docker:dev"]
-
-FROM base AS build
 ARG VITE_API_URL
 ENV VITE_API_URL=${VITE_API_URL}
-RUN pnpm --filter @ecoconception/web build
 
-FROM nginx:1.27-alpine AS prod
-COPY apps/web/nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /workspace/apps/web/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+RUN pnpm --filter @ecoconception/web build
+RUN pnpm --filter @ecoconception/landing build
+
+FROM caddy:2.8-alpine
+
+COPY apps/proxy/Caddyfile /etc/caddy/Caddyfile
+COPY --from=build /workspace/apps/landing/dist /srv/landing
+COPY --from=build /workspace/apps/web/dist /srv/dashboard

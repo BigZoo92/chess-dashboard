@@ -1,0 +1,51 @@
+{
+  auto_https off
+}
+
+:80 {
+  encode zstd gzip
+
+  @api path /api/* /health
+  handle @api {
+    reverse_proxy api:3001
+  }
+
+  @dashboardAssets path /assets/*
+  handle @dashboardAssets {
+    root * /srv/dashboard
+    file_server
+  }
+
+  @dashboard path /dashboard*
+  handle_path @dashboard {
+    root * /srv/dashboard
+    try_files {path} /index.html
+    file_server
+  }
+
+  handle {
+    root * /srv/landing
+    try_files {path} /index.html
+    file_server
+  }
+
+  header /_astro/* Cache-Control "public, max-age=31536000, immutable"
+  header /assets/* Cache-Control "public, max-age=31536000, immutable"
+  header /dashboard/assets/* Cache-Control "public, max-age=31536000, immutable"
+  header /images/* Cache-Control "public, max-age=86400"
+  header /robots.txt Cache-Control "public, max-age=3600"
+  header /sitemap.xml Cache-Control "public, max-age=3600"
+  header / Cache-Control "no-cache"
+  header /dashboard Cache-Control "no-cache"
+  header /dashboard/ Cache-Control "no-cache"
+
+  header {
+    Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api-chess-dashboard.enzogivernaud.fr; form-action 'self'; upgrade-insecure-requests"
+    Cross-Origin-Opener-Policy "same-origin"
+    Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Referrer-Policy "strict-origin-when-cross-origin"
+    Strict-Transport-Security "max-age=2592000; includeSubDomains"
+    X-Content-Type-Options "nosniff"
+    X-Frame-Options "DENY"
+  }
+}

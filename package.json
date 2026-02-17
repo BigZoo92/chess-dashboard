@@ -4,8 +4,11 @@
   "packageManager": "pnpm@10.5.2",
   "scripts": {
     "up": "docker compose up --build",
+    "up:prod": "docker compose -f docker-compose.prod.yml up --build",
     "down": "docker compose down -v",
+    "down:prod": "docker compose -f docker-compose.prod.yml down -v",
     "logs": "docker compose logs -f",
+    "logs:prod": "docker compose -f docker-compose.prod.yml logs -f",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
     "format": "prettier --write ."

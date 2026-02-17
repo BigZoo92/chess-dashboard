@@ -19,12 +19,13 @@ services:
     build:
       context: .
       dockerfile: apps/api/Dockerfile
+      target: dev
     env_file:
       - .env
     environment:
       DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@db:5432/chess_stats?schema=public}
       API_PORT: ${API_PORT:-3001}
-      CORS_ORIGIN: ${CORS_ORIGIN:-https://chess-dashboard.enzogivernaud.fr}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8080,http://localhost:5173}
       CHESSCOM_USERNAME: ${CHESSCOM_USERNAME:-}
       CHESSCOM_USER_AGENT: "${CHESSCOM_USER_AGENT:-ecoconception-chess-dashboard (contact: you@email.com)}"
       SYNC_CONCURRENCY: ${SYNC_CONCURRENCY:-1}
@@ -47,10 +48,11 @@ services:
     build:
       context: .
       dockerfile: apps/web/Dockerfile
+      target: dev
     env_file:
       - .env
     environment:
-      VITE_API_URL: ${VITE_API_URL:-http://localhost:3001}
+      VITE_API_URL: ""
       WEB_PORT: ${WEB_PORT:-5173}
       CHOKIDAR_USEPOLLING: "true"
     depends_on:
@@ -64,10 +66,42 @@ services:
       - pnpm-store:/pnpm/store
     command: sh -c "pnpm install --no-frozen-lockfile --force && pnpm --filter @ecoconception/web docker:dev"
 
+  landing:
+    build:
+      context: .
+      dockerfile: apps/landing/Dockerfile
+      target: dev
+    env_file:
+      - .env
+    environment:
+      LANDING_PORT: ${LANDING_PORT:-4321}
+      CHOKIDAR_USEPOLLING: "true"
+    ports:
+      - "4321:4321"
+    volumes:
+      - .:/workspace
+      - landing-root-node-modules:/workspace/node_modules
+      - landing-node-modules:/workspace/apps/landing/node_modules
+      - pnpm-store:/pnpm/store
+    command: sh -c "pnpm install --no-frozen-lockfile --force && pnpm --filter @ecoconception/landing docker:dev"
+
+  proxy:
+    image: caddy:2.8-alpine
+    depends_on:
+      - landing
+      - web
+      - api
+    ports:
+      - "8080:80"
+    volumes:
+      - ./apps/proxy/Caddyfile.dev:/etc/caddy/Caddyfile:ro
+
 volumes:
   db-data:
   api-root-node-modules:
   web-root-node-modules:
+  landing-root-node-modules:
   api-node-modules:
   web-node-modules:
+  landing-node-modules:
   pnpm-store:
