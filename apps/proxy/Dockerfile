@@ -29,6 +29,6 @@ RUN pnpm --filter @ecoconception/landing build
 
 FROM caddy:2.8-alpine
 
-COPY apps/proxy/Caddyfile /etc/caddy/Caddyfile
+COPY apps/proxy/Caddyfile.prod /etc/caddy/Caddyfile
 COPY --from=build /workspace/apps/landing/dist /srv/landing
 COPY --from=build /workspace/apps/web/dist /srv/dashboard
