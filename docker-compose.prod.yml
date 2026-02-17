@@ -38,7 +38,7 @@ services:
     ports:
       - "3001:3001"
 
-  proxy:
+  web:
     build:
       context: .
       dockerfile: apps/proxy/Dockerfile
