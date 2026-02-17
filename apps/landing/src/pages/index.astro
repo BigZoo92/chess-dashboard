@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../layouts/base-layout.astro';
+
+const title = 'Chess Dashboard - Track Progress and Improve Faster';
+const description =
+  'A lightweight chess analytics dashboard focused on lower data costs, faster loading, and clear performance insights.';
+const canonical = 'https://chess-dashboard.enzogivernaud.fr/';
+const socialImage = 'https://chess-dashboard.enzogivernaud.fr/images/hero-placeholder.jpg';
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} image={socialImage}>
+  <Fragment slot="head">
+    <link
+      rel="preload"
+      as="image"
+      href="/images/hero-placeholder.jpg"
+      imagesrcset="/images/hero-placeholder.jpg 1600w"
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
+  </Fragment>
+
+  <header class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
+    <a class="text-sm font-semibold uppercase tracking-[0.18em] text-slate-200" href="/">Chess Dashboard</a>
+    <a
+      class="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-emerald-300"
+      href="/dashboard"
+    >
+      Open Dashboard
+    </a>
+  </header>
+
+  <main>
+    <section class="mx-auto grid w-full max-w-6xl gap-12 px-6 pb-16 pt-6 lg:grid-cols-2 lg:items-end">
+      <div class="space-y-6">
+        <p class="inline-flex rounded-full border border-emerald-300/40 bg-emerald-300/10 px-4 py-1 text-sm text-emerald-100">
+          Built for eco-optimized analytics
+        </p>
+        <h1 class="text-balance text-4xl font-bold leading-tight text-white md:text-6xl">
+          Chess progress tracking with less JS, less network, and faster insights.
+        </h1>
+        <p class="max-w-xl text-lg text-slate-300">
+          This landing page is static-first and lightweight. The full dashboard remains available at
+          <code>/dashboard</code>.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a
+            class="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-300"
+            href="/dashboard"
+          >
+            Start analyzing games
+          </a>
+          <a class="rounded-lg border border-slate-500 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:bg-slate-800" href="#how-it-works">
+            How it works
+          </a>
+        </div>
+      </div>
+
+      <figure class="section-card overflow-hidden p-0">
+        <img
+          src="/images/hero-placeholder.jpg"
+          alt="Chess pieces on a board representing strategic game analysis."
+          width="1920"
+          height="1080"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="h-auto w-full object-cover"
+        />
+        <figcaption class="border-t border-slate-700/70 px-5 py-3 text-sm text-slate-300">
+          Placeholder hero image. Replace with final compressed image at <code>apps/landing/public/images/hero-placeholder.jpg</code>.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="mx-auto w-full max-w-6xl px-6 pb-12" aria-labelledby="value-props-heading">
+      <h2 id="value-props-heading" class="mb-5 text-2xl font-semibold text-white">Value props</h2>
+      <div class="grid gap-4 md:grid-cols-3">
+        <article class="section-card">
+          <h3 class="text-lg font-semibold text-white">Ultra-light front page</h3>
+          <p class="mt-2 text-slate-300">Static rendering, minimal scripts, and optimized critical image delivery.</p>
+        </article>
+        <article class="section-card">
+          <h3 class="text-lg font-semibold text-white">Actionable chess metrics</h3>
+          <p class="mt-2 text-slate-300">Winrate, openings, streaks, and habits in one dashboard entry point.</p>
+        </article>
+        <article class="section-card">
+          <h3 class="text-lg font-semibold text-white">Infrastructure-ready</h3>
+          <p class="mt-2 text-slate-300">Path routing for <code>/</code> and <code>/dashboard</code> plus API caching headers.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="mx-auto w-full max-w-6xl px-6 pb-12" aria-labelledby="feature-highlights-heading">
+      <h2 id="feature-highlights-heading" class="mb-5 text-2xl font-semibold text-white">Feature highlights</h2>
+      <div class="grid gap-4 md:grid-cols-2">
+        <article class="section-card">
+          <h3 class="text-lg font-semibold text-white">Summary and rating timeline</h3>
+          <p class="mt-2 text-slate-300">Read your trend in seconds without waiting for heavy landing scripts to hydrate.</p>
+        </article>
+        <article class="section-card">
+          <h3 class="text-lg font-semibold text-white">Opening and habits analysis</h3>
+          <p class="mt-2 text-slate-300">Inspect frequent openings, performance drops, and temporal patterns quickly.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="mx-auto w-full max-w-6xl px-6 pb-12" aria-labelledby="how-heading">
+      <h2 id="how-heading" class="mb-5 text-2xl font-semibold text-white">How it works</h2>
+      <ol class="grid gap-4 md:grid-cols-3">
+        <li class="section-card">
+          <h3 class="text-lg font-semibold text-white">1. Sync your account</h3>
+          <p class="mt-2 text-slate-300">Trigger Chess.com sync from dashboard settings.</p>
+        </li>
+        <li class="section-card">
+          <h3 class="text-lg font-semibold text-white">2. Explore key signals</h3>
+          <p class="mt-2 text-slate-300">Use summary, openings, habits, and games views.</p>
+        </li>
+        <li class="section-card">
+          <h3 class="text-lg font-semibold text-white">3. Iterate continuously</h3>
+          <p class="mt-2 text-slate-300">Review new data with cached API responses and reduced client payload.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="mx-auto w-full max-w-6xl px-6 pb-12" aria-labelledby="screenshots-heading">
+      <h2 id="screenshots-heading" class="mb-5 text-2xl font-semibold text-white">Screenshots (placeholders)</h2>
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="section-card h-52 bg-gradient-to-br from-slate-900 to-slate-800">
+          <p class="text-slate-300">Dashboard overview screenshot placeholder</p>
+        </div>
+        <div class="section-card h-52 bg-gradient-to-br from-slate-900 to-slate-800">
+          <p class="text-slate-300">Openings and habits screenshot placeholder</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto w-full max-w-6xl px-6 pb-16" aria-labelledby="cta-heading">
+      <div class="section-card flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h2 id="cta-heading" class="text-2xl font-semibold text-white">Ready to inspect your games?</h2>
+          <p class="mt-1 text-slate-300">Jump directly to the production React dashboard route.</p>
+        </div>
+        <a
+          class="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-300"
+          href="/dashboard"
+        >
+          Go to /dashboard
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
