@@ -13,7 +13,7 @@ export default defineConfig({
     }
   },
   server: {
-    allowedHosts: ['chess-dashboard.enzogivernaud.f'],
+    allowedHosts: ['chess-dashboard.enzogivernaud.fr'],
     host: '0.0.0.0',
     port: webPort,
     proxy: apiUrl
