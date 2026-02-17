@@ -6,6 +6,12 @@
   encode zstd gzip
 
   @api path /api/* /health
+  @apiHealth path /api/health
+  handle @apiHealth {
+    uri replace /api/health /health
+    reverse_proxy api:3001
+  }
+
   handle @api {
     reverse_proxy api:3001
   }
@@ -18,8 +24,9 @@
   }
 
   @dashboard path /dashboard*
-  handle_path @dashboard {
+  handle @dashboard {
     root * /srv/dashboard
+    uri strip_prefix /dashboard
     try_files {path} /index.html
     file_server
   }
