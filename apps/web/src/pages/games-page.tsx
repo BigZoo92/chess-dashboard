@@ -57,6 +57,7 @@ export function GamesPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Games</h1>
+        <h2 className="sr-only">Games sections</h2>
         <p className="text-sm text-muted-foreground">Table paginée avec filtres et détail PGN.</p>
       </div>
 

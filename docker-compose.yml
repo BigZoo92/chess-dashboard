@@ -32,6 +32,16 @@ services:
       SYNC_MAX_MONTHS: ${SYNC_MAX_MONTHS:-36}
       SYNC_RATE_LIMIT_MS: ${SYNC_RATE_LIMIT_MS:-300}
       CHOKIDAR_USEPOLLING: "true"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -qO- http://localhost:3001/health >/dev/null 2>&1 || exit 1",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 20s
     depends_on:
       db:
         condition: service_healthy

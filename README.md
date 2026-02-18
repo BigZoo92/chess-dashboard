@@ -71,3 +71,31 @@ This uses:
 - static React build for `/dashboard`
 - API in production mode
 - Caddy for path routing, compression, cache headers, and security headers
+
+## Observability (opt-in)
+
+Observability stack is disabled by default and does not change normal behavior.
+
+Start dev stack + observability:
+
+```bash
+pnpm up:obs
+```
+
+Start prod stack + observability:
+
+```bash
+pnpm up:prod:obs
+```
+
+Before starting, set in `.env`:
+- `OBSERVABILITY_ENABLED=1`
+- `GRAFANA_ADMIN_USER=...`
+- `GRAFANA_ADMIN_PASSWORD=...`
+
+Grafana is intentionally bound to localhost only (`127.0.0.1:${GRAFANA_PORT:-3000}`), so in production access should be done via SSH tunnel.
+
+The observability profile now includes a `grafana/k6` smoke test container.
+- default target: `${K6_TARGET:-http://api:3001}/health`
+- defaults: `K6_VUS=5`, `K6_DURATION=30s`
+- metrics are pushed to Prometheus via remote-write and can be visualized in Grafana.

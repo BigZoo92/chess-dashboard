@@ -1,0 +1,123 @@
+services:
+  api:
+    environment:
+      OBSERVABILITY_ENABLED: ${OBSERVABILITY_ENABLED:-1}
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-http://otel-collector:4318}
+      OTEL_SERVICE_NAME: ${OTEL_SERVICE_NAME:-api}
+      PYROSCOPE_SERVER_ADDRESS: ${PYROSCOPE_SERVER_ADDRESS:-http://pyroscope:4040}
+      GRAFANA_ADMIN_USER: admin
+
+  grafana:
+    image: grafana/grafana:11.2.2
+    profiles: ["observability"]
+    depends_on:
+      - prometheus
+      - loki
+      - tempo
+      - pyroscope
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:?GRAFANA_ADMIN_USER is required when observability is enabled}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?GRAFANA_ADMIN_PASSWORD is required when observability is enabled}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_SERVER_ROOT_URL: http://localhost:${GRAFANA_PORT:-3000}
+    ports:
+      - "127.0.0.1:${GRAFANA_PORT:-3000}:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./apps/observability/grafana/provisioning:/etc/grafana/provisioning:ro
+
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    profiles: ["observability"]
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=24h
+      - --web.enable-lifecycle
+      - --web.enable-remote-write-receiver
+    volumes:
+      - ./apps/observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+
+  k6:
+    image: grafana/k6:0.57.0
+    profiles: ["observability"]
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      K6_TARGET: ${K6_TARGET:-http://api:3001}
+      K6_VUS: ${K6_VUS:-5}
+      K6_DURATION: ${K6_DURATION:-30s}
+      K6_PROMETHEUS_RW_SERVER_URL: http://prometheus:9090/api/v1/write
+      K6_PROMETHEUS_RW_TREND_STATS: p(90),p(95),p(99),min,max,avg
+    volumes:
+      - ./apps/observability/k6/scripts:/scripts:ro
+    entrypoint: ["k6"]
+    command:
+      - run
+      - --out
+      - experimental-prometheus-rw
+      - /scripts/smoke.js
+
+  loki:
+    image: grafana/loki:2.9.9
+    profiles: ["observability"]
+    command:
+      - -config.file=/etc/loki/config.yml
+    volumes:
+      - ./apps/observability/loki/config.yml:/etc/loki/config.yml:ro
+      - loki-data:/loki
+
+  promtail:
+    image: grafana/promtail:2.9.9
+    profiles: ["observability"]
+    depends_on:
+      - loki
+    command:
+      - -config.file=/etc/promtail/config.yml
+    volumes:
+      - ./apps/observability/promtail/config.yml:/etc/promtail/config.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - promtail-data:/tmp
+
+  tempo:
+    image: grafana/tempo:2.6.1
+    profiles: ["observability"]
+    command:
+      - -config.file=/etc/tempo/config.yml
+    volumes:
+      - ./apps/observability/tempo/config.yml:/etc/tempo/config.yml:ro
+      - tempo-data:/var/tempo
+
+  pyroscope:
+    image: grafana/pyroscope:1.11.1
+    profiles: ["observability"]
+    command:
+      - server
+    volumes:
+      - pyroscope-data:/var/lib/pyroscope
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.111.0
+    profiles: ["observability"]
+    depends_on:
+      - tempo
+    command:
+      - --config=/etc/otelcol-contrib/config.yml
+    volumes:
+      - ./apps/observability/otel-collector/config.yml:/etc/otelcol-contrib/config.yml:ro
+    expose:
+      - "4317"
+      - "4318"
+      - "9464"
+
+volumes:
+  grafana-data:
+  prometheus-data:
+  loki-data:
+  promtail-data:
+  tempo-data:
+  pyroscope-data:

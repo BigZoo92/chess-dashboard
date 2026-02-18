@@ -22,14 +22,16 @@ const socialImage = new URL('/images/hero-placeholder.jpg', site).toString();
       as="image"
       href="/images/hero.avif"
       type="image/avif"
-      imagesrcset="/images/hero.avif 1920w"
-      imagesizes="100vw"
+      imageSrcSet="/images/hero.avif 1920w"
+      imageSizes="100vw"
       fetchpriority="high"
     />
   </Fragment>
 
   <header class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
-    <a class="text-sm font-semibold uppercase tracking-[0.18em] text-slate-200" href="/">Chess Dashboard</a>
+    <a class="text-sm font-semibold uppercase tracking-[0.18em] text-slate-200" href="/"
+      >Chess Dashboard</a
+    >
     <a
       class="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-emerald-300"
       href="/dashboard"
@@ -56,10 +58,15 @@ const socialImage = new URL('/images/hero-placeholder.jpg', site).toString();
           class="h-full w-full object-cover"
         />
       </picture>
-      <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,rgba(16,185,129,0.3),transparent_40%),linear-gradient(160deg,rgba(2,6,23,0.6),rgba(2,6,23,0.92))]"></div>
+      <div
+        class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,rgba(16,185,129,0.3),transparent_40%),linear-gradient(160deg,rgba(2,6,23,0.6),rgba(2,6,23,0.92))]"
+      >
+      </div>
 
       <div class="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-20 md:py-28">
-        <p class="inline-flex w-fit rounded-full border border-emerald-300/40 bg-emerald-300/10 px-4 py-1 text-sm text-emerald-100">
+        <p
+          class="inline-flex w-fit rounded-full border border-emerald-300/40 bg-emerald-300/10 px-4 py-1 text-sm text-emerald-100"
+        >
           Built for eco-optimized analytics
         </p>
         <h1 class="max-w-4xl text-balance text-4xl font-bold leading-tight text-white md:text-6xl">
@@ -76,46 +83,71 @@ const socialImage = new URL('/images/hero-placeholder.jpg', site).toString();
           >
             Start analyzing games
           </a>
-          <a class="rounded-lg border border-slate-500 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:bg-slate-800" href="#how-it-works">
+          <a
+            class="rounded-lg border border-slate-500 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:bg-slate-800"
+            href="#how-it-works"
+          >
             How it works
           </a>
         </div>
       </div>
     </section>
 
-    <section class="mx-auto w-full max-w-6xl px-6 pb-12 pt-12" aria-labelledby="value-props-heading">
+    <section
+      class="mx-auto w-full max-w-6xl px-6 pb-12 pt-12"
+      aria-labelledby="value-props-heading"
+    >
       <h2 id="value-props-heading" class="mb-5 text-2xl font-semibold text-white">Value props</h2>
       <div class="grid gap-4 md:grid-cols-3">
         <article class="section-card">
           <h3 class="text-lg font-semibold text-white">Ultra-light front page</h3>
-          <p class="mt-2 text-slate-300">Static rendering, minimal scripts, and optimized critical image delivery.</p>
+          <p class="mt-2 text-slate-300">
+            Static rendering, minimal scripts, and optimized critical image delivery.
+          </p>
         </article>
         <article class="section-card">
           <h3 class="text-lg font-semibold text-white">Actionable chess metrics</h3>
-          <p class="mt-2 text-slate-300">Winrate, openings, streaks, and habits in one dashboard entry point.</p>
+          <p class="mt-2 text-slate-300">
+            Winrate, openings, streaks, and habits in one dashboard entry point.
+          </p>
         </article>
         <article class="section-card">
           <h3 class="text-lg font-semibold text-white">Infrastructure-ready</h3>
-          <p class="mt-2 text-slate-300">Path routing for <code>/</code> and <code>/dashboard</code> plus API caching headers.</p>
+          <p class="mt-2 text-slate-300">
+            Path routing for <code>/</code> and <code>/dashboard</code> plus API caching headers.
+          </p>
         </article>
       </div>
     </section>
 
-    <section class="mx-auto w-full max-w-6xl px-6 pb-12" aria-labelledby="feature-highlights-heading">
-      <h2 id="feature-highlights-heading" class="mb-5 text-2xl font-semibold text-white">Feature highlights</h2>
+    <section
+      class="mx-auto w-full max-w-6xl px-6 pb-12"
+      aria-labelledby="feature-highlights-heading"
+    >
+      <h2 id="feature-highlights-heading" class="mb-5 text-2xl font-semibold text-white">
+        Feature highlights
+      </h2>
       <div class="grid gap-4 md:grid-cols-2">
         <article class="section-card">
           <h3 class="text-lg font-semibold text-white">Summary and rating timeline</h3>
-          <p class="mt-2 text-slate-300">Read your trend in seconds without waiting for heavy landing scripts to hydrate.</p>
+          <p class="mt-2 text-slate-300">
+            Read your trend in seconds without waiting for heavy landing scripts to hydrate.
+          </p>
         </article>
         <article class="section-card">
           <h3 class="text-lg font-semibold text-white">Opening and habits analysis</h3>
-          <p class="mt-2 text-slate-300">Inspect frequent openings, performance drops, and temporal patterns quickly.</p>
+          <p class="mt-2 text-slate-300">
+            Inspect frequent openings, performance drops, and temporal patterns quickly.
+          </p>
         </article>
       </div>
     </section>
 
-    <section id="how-it-works" class="mx-auto w-full max-w-6xl px-6 pb-12" aria-labelledby="how-heading">
+    <section
+      id="how-it-works"
+      class="mx-auto w-full max-w-6xl px-6 pb-12"
+      aria-labelledby="how-heading"
+    >
       <h2 id="how-heading" class="mb-5 text-2xl font-semibold text-white">How it works</h2>
       <ol class="grid gap-4 md:grid-cols-3">
         <li class="section-card">
@@ -128,13 +160,17 @@ const socialImage = new URL('/images/hero-placeholder.jpg', site).toString();
         </li>
         <li class="section-card">
           <h3 class="text-lg font-semibold text-white">3. Iterate continuously</h3>
-          <p class="mt-2 text-slate-300">Review new data with cached API responses and reduced client payload.</p>
+          <p class="mt-2 text-slate-300">
+            Review new data with cached API responses and reduced client payload.
+          </p>
         </li>
       </ol>
     </section>
 
     <section class="mx-auto w-full max-w-6xl px-6 pb-12" aria-labelledby="screenshots-heading">
-      <h2 id="screenshots-heading" class="mb-5 text-2xl font-semibold text-white">Screenshots (placeholders)</h2>
+      <h2 id="screenshots-heading" class="mb-5 text-2xl font-semibold text-white">
+        Screenshots (placeholders)
+      </h2>
       <div class="grid gap-4 md:grid-cols-2">
         <div class="section-card h-52 bg-gradient-to-br from-slate-900 to-slate-800">
           <p class="text-slate-300">Dashboard overview screenshot placeholder</p>
@@ -146,17 +182,15 @@ const socialImage = new URL('/images/hero-placeholder.jpg', site).toString();
     </section>
 
     <section class="mx-auto w-full max-w-6xl px-6 pb-16" aria-labelledby="cta-heading">
-      <div class="section-card flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
+      <div
+        class="section-card flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between"
+      >
         <div>
-          <h2 id="cta-heading" class="text-2xl font-semibold text-white">Ready to inspect your games?</h2>
+          <h2 id="cta-heading" class="text-2xl font-semibold text-white">
+            Ready to inspect your games?
+          </h2>
           <p class="mt-1 text-slate-300">Jump directly to the production React dashboard route.</p>
         </div>
-        <a
-          class="rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-300"
-          href="/dashboard"
-        >
-          Go to /dashboard
-        </a>
       </div>
     </section>
   </main>

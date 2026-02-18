@@ -66,6 +66,7 @@ export function DashboardPage() {
           {syncMutation.isPending ? 'Syncing...' : 'Sync now'}
         </Button>
       </div>
+      <h2 className="sr-only">Overview sections</h2>
 
       <TabsList className="border border-stone-200/10 bg-[#0d130f]">
         {timeClassOptions.map((option) => (
@@ -107,6 +108,8 @@ export function DashboardPage() {
             />
             <KpiCard title="Last 30d delta" value={`${summary.delta30d.gamesDelta >= 0 ? '+' : ''}${summary.delta30d.gamesDelta}`} />
           </div>
+
+          <h2 className="text-3xl font-bold tracking-tight text-stone-100">Charts</h2>
 
           <div className="grid gap-4 lg:grid-cols-2">
             <Suspense fallback={<Skeleton className="h-80 bg-stone-100/10 lg:col-span-2" />}>

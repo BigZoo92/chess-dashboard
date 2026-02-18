@@ -73,6 +73,7 @@ export function HabitsPage() {
           </Select>
         </div>
       </div>
+      <h2 className="sr-only">Habits sections</h2>
 
       <Card>
         <CardHeader>
