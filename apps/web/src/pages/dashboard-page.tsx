@@ -1,7 +1,8 @@
-import { lazy, Suspense, useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
+import { LazyCharts } from '@/components/lazy-charts';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -12,10 +13,6 @@ import { formatPercent } from '@/lib/format';
 import { cn } from '@/lib/utils';
 
 const timeClassOptions = ['', 'bullet', 'blitz', 'rapid', 'daily'];
-
-const DashboardCharts = lazy(async () => ({
-  default: (await import('@/components/dashboard-charts')).DashboardCharts
-}));
 
 export function DashboardPage() {
   const { username } = useSettings();
@@ -111,11 +108,7 @@ export function DashboardPage() {
 
           <h2 className="text-3xl font-bold tracking-tight text-stone-100">Charts</h2>
 
-          <div className="grid gap-4 lg:grid-cols-2">
-            <Suspense fallback={<Skeleton className="h-80 bg-stone-100/10 lg:col-span-2" />}>
-              <DashboardCharts ratingPoints={ratingPoints} byTimeClass={summary.byTimeClass} />
-            </Suspense>
-          </div>
+          <LazyCharts ratingPoints={ratingPoints} byTimeClass={summary.byTimeClass} />
         </>
       ) : null}
     </div>

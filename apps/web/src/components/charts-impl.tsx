@@ -1,5 +1,5 @@
-import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import type { RatingSeriesPoint, SummaryDto } from '@ecoconception/shared';
+import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { formatShortDate } from '@/lib/format';
@@ -13,12 +13,12 @@ const chartTooltipStyle = {
   color: '#f5f5f4'
 };
 
-type DashboardChartsProps = {
+type ChartsImplProps = {
   ratingPoints: RatingSeriesPoint[];
   byTimeClass: SummaryDto['byTimeClass'];
 };
 
-export function DashboardCharts({ ratingPoints, byTimeClass }: DashboardChartsProps) {
+export function ChartsImpl({ ratingPoints, byTimeClass }: ChartsImplProps) {
   return (
     <>
       <Card className="border-stone-200/10 bg-[#141c17] text-stone-100">

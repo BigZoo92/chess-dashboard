@@ -15,6 +15,7 @@
     "logs:obs": "docker compose -f docker-compose.yml -f docker-compose.observability.yml --profile observability logs -f",
     "logs:prod": "docker compose -f docker-compose.prod.yml logs -f",
     "logs:prod:obs": "docker compose -f docker-compose.prod.yml -f docker-compose.observability.yml --profile observability logs -f",
+    "check:robots": "node scripts/check-robots.mjs",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
     "format": "prettier --write ."

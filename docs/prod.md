@@ -20,6 +20,23 @@ Expected:
 - `/dashboard/` -> `200` and dashboard HTML
 - `/api/health` -> `200` with `{"ok":true}`
 
+## Verify SEO files
+
+```bash
+curl -i http://localhost:8080/robots.txt
+curl -i http://localhost:8080/sitemap.xml
+pnpm check:robots -- http://localhost:8080/robots.txt
+```
+
+Expected for `robots.txt`:
+- Status `200`
+- `Content-Type: text/plain; charset=utf-8`
+- Only standard robots directives (`User-agent`, `Allow`, `Disallow`, `Sitemap`, `Crawl-delay`, `Host`).
+
+`robots.txt` source is maintained in `apps/landing/src/pages/robots.txt.ts` (Astro route).
+Do not add non-standard directives such as `Content-Signal` in this file.
+If AI-training controls are needed, apply them with page-level meta tags or route-specific HTTP headers, not robots directives.
+
 ## Debug if failing
 
 ```bash

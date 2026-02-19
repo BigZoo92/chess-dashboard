@@ -42,10 +42,27 @@ export default defineConfig(({ mode }) => {
       sourcemap: false,
       rollupOptions: {
         output: {
-          manualChunks: {
-            charts: ['recharts'],
-            vendor: ['react', 'react-dom', 'react-router-dom'],
-            query: ['@tanstack/react-query']
+          manualChunks(id) {
+            const normalizedId = id.replaceAll('\\', '/');
+
+            if (!normalizedId.includes('/node_modules/')) {
+              return undefined;
+            }
+
+            if (
+              normalizedId.includes('/node_modules/recharts/') ||
+              normalizedId.includes('/node_modules/lodash/') ||
+              normalizedId.includes('/node_modules/d3-') ||
+              normalizedId.includes('/node_modules/victory-vendor/')
+            ) {
+              return 'charts';
+            }
+
+            if (normalizedId.includes('/node_modules/@tanstack/react-query/')) {
+              return 'query';
+            }
+
+            return 'vendor';
           }
         }
       }

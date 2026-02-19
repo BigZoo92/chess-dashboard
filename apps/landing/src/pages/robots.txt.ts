@@ -6,8 +6,9 @@ const fallbackSite = new URL('https://chess-dashboard.enzogivernaud.fr/');
 const site = new URL(import.meta.env.SITE ?? fallbackSite.toString());
 
 export const GET: APIRoute = () => {
+  // Keep robots.txt parser-friendly: only standard directives.
   const sitemapUrl = new URL('/sitemap.xml', site).toString();
-  const lines = [
+  const directives = [
     'User-agent: *',
     'Allow: /',
     'Disallow: /api/',
@@ -16,7 +17,7 @@ export const GET: APIRoute = () => {
     'Disallow: /dashboard/',
     `Sitemap: ${sitemapUrl}`
   ];
-  const body = `${lines.join('\n')}\n`;
+  const body = `${directives.join('\n')}\n`;
 
   return new Response(body, {
     headers: {
