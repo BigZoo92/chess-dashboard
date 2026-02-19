@@ -7,7 +7,16 @@ const site = new URL(import.meta.env.SITE ?? fallbackSite.toString());
 
 export const GET: APIRoute = () => {
   const sitemapUrl = new URL('/sitemap.xml', site).toString();
-  const body = `User-agent: *\nAllow: /\nSitemap: ${sitemapUrl}\n`;
+  const lines = [
+    'User-agent: *',
+    'Allow: /',
+    'Disallow: /api/',
+    'Disallow: /health',
+    'Disallow: /dashboard',
+    'Disallow: /dashboard/',
+    `Sitemap: ${sitemapUrl}`
+  ];
+  const body = `${lines.join('\n')}\n`;
 
   return new Response(body, {
     headers: {
