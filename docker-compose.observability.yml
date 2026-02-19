@@ -6,7 +6,18 @@ services:
       OTEL_SERVICE_NAME: ${OTEL_SERVICE_NAME:-api}
       PYROSCOPE_SERVER_ADDRESS: ${PYROSCOPE_SERVER_ADDRESS:-http://pyroscope:4040}
       GRAFANA_ADMIN_USER: admin
-
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:'+(process.env.API_PORT||3001)+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+      start_period: 300s
   grafana:
     image: grafana/grafana:11.2.2
     profiles: ["observability"]
@@ -42,14 +53,14 @@ services:
 
   k6:
     image: grafana/k6:0.57.0
-    profiles: ["observability"]
+    profiles: ["k6"]
     depends_on:
       api:
         condition: service_healthy
+      prometheus:
+        condition: service_started
     environment:
       K6_TARGET: ${K6_TARGET:-http://api:3001}
-      K6_VUS: ${K6_VUS:-5}
-      K6_DURATION: ${K6_DURATION:-30s}
       K6_PROMETHEUS_RW_SERVER_URL: http://prometheus:9090/api/v1/write
       K6_PROMETHEUS_RW_TREND_STATS: p(90),p(95),p(99),min,max,avg
     volumes:
